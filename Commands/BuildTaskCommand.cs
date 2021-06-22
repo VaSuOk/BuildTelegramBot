@@ -6,13 +6,13 @@ using Telegram.Bot.Args;
 
 namespace BuildTelegramBot.Commands
 {
-    class BackCommand : Command
+    class BuildTaskCommand : Command
     {
-        public override string Name => "Повернутись назад";
+        public override string Name => "Будівництво";
 
         public override void ExecuteAsync(MessageEventArgs e, TelegramBotClient client)
         {
-            client.SendTextMessageAsync(e.Message.Chat, "Головне меню", replyMarkup: Buttons.GetMainButtons());
+            
         }
     }
 }

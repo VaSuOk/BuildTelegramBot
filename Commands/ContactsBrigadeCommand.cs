@@ -1,18 +1,10 @@
 ﻿using BuildTelegramBot.Models;
 using BuildTelegramBot.MySQL;
 using BuildTelegramBot.User;
-using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Args;
-using Telegram.Bot.Types.InputFiles;
 
 namespace BuildTelegramBot.Commands
 {
@@ -32,8 +24,10 @@ namespace BuildTelegramBot.Commands
                 {
                     if (iter != null)
                     {
-                        string message = "Ініціали працівника : " + iter.user.Surname + " " + iter.user.Name +
-                            "\nКонтакти : "+ iter.user.Phone;
+                        string message = "\n\nІніціали працівника : " + iter.user.Surname + " " + iter.user.Name +
+                            "\nДата народження : " + iter.user.Birthday +
+                            "\nКонтакти : " + iter.user.Phone + " " + iter.user.Email +
+                            "\nПосада - " + iter.Position;
                         MemoryStream imageFile = new MemoryStream(iter.user.UserImage);
                         client.SendPhotoAsync(chatId, photo: imageFile, caption: message);
 

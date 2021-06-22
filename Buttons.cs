@@ -34,8 +34,8 @@ namespace BuildTelegramBot
             {
                 Keyboard = new List<List<KeyboardButton>>
                 {
-                    new List<KeyboardButton>{ new KeyboardButton { Text = "Контакти працівників бригади" }},
-                    new List<KeyboardButton>{ new KeyboardButton { Text = "Статистика Бригад" } },
+                    new List<KeyboardButton>{ new KeyboardButton { Text = "Дані бригади" }},
+                    new List<KeyboardButton>{ new KeyboardButton { Text = "Контакти працівників бригади" } },
                     new List<KeyboardButton>{ new KeyboardButton { Text = "Повернутись назад👈" } }
                 }
             };
@@ -62,6 +62,32 @@ namespace BuildTelegramBot
                     new List<KeyboardButton>{ new KeyboardButton { Text = "Повернутись назад👈" } }
                 }
             };
+        }
+        public static IReplyMarkup GetTaskButtons(bool istype)
+        {
+            if (istype)
+            {
+                return new ReplyKeyboardMarkup
+                {
+                    Keyboard = new List<List<KeyboardButton>>
+                    {
+                        new List<KeyboardButton>{ new KeyboardButton { Text = "Проектування будинку" }},
+                        new List<KeyboardButton>{ new KeyboardButton { Text = "Повернутись назад👈" } }
+                    }
+                };
+            }
+            else
+            {
+                return new ReplyKeyboardMarkup
+                {
+                    Keyboard = new List<List<KeyboardButton>>
+                    {
+                        new List<KeyboardButton>{ new KeyboardButton { Text = "Будівництво" }},
+                        new List<KeyboardButton>{ new KeyboardButton { Text = "Повернутись назад👈" } }
+                    }
+                };
+            }
+           
         }
     }
 }

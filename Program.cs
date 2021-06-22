@@ -26,6 +26,10 @@ namespace BuildTelegramBot
             commandsList.Add(new BrigadeCommand());
             commandsList.Add(new ContactsBrigadeCommand());
             commandsList.Add(new BackCommand());
+            commandsList.Add(new BrigadeInfoCommand());
+            commandsList.Add(new Task());
+            commandsList.Add(new AchitectTaskCommand());
+            commandsList.Add(new BuildTaskCommand());
         }
 
         static void Main(string[] args)

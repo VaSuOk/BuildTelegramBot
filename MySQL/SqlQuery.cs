@@ -162,6 +162,120 @@ namespace BuildTelegramBot.MySQL
                 return null;
             }
         }
+        public static TaskArchitect GetTaskByIDWorker(int id)
+        {
+            DataTable temp = new DataTable();
+            try
+            {
+                DataBase.Get_Instance().Connect();
+                MySqlCommand command = new MySqlCommand(
+                            "SELECT * FROM `architecttask` WHERE `ID_User` = @ID", DataBase.Get_Instance().connection);
+                MySqlDataAdapter adapter = new MySqlDataAdapter();
+                command.Parameters.Add("@ID", MySqlDbType.Int32).Value = id;
+                adapter.SelectCommand = command;
+                adapter.Fill(temp);
+                if (temp.Rows.Count > 0)
+                {
+                    TaskArchitect taskArchitect = new TaskArchitect();
+                    taskArchitect.ID = Convert.ToInt32(temp.Rows[0][0]);
+                    taskArchitect.Architect = GetUserWIByID(Convert.ToInt32(temp.Rows[0][1]));
+                    taskArchitect.constructionObject = GetBObjectByID(Convert.ToInt32(temp.Rows[0][2]));
+                    taskArchitect.DateCreation = Convert.ToString(temp.Rows[0][3]);
+                    taskArchitect.DateEnd = Convert.ToString(temp.Rows[0][4]);
+                    taskArchitect.Status = Convert.ToString(temp.Rows[0][5]);
+                    taskArchitect.BuildPlan = (byte[])temp.Rows[0][6];
+                    return taskArchitect;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                string ar = ex.Message;
+                throw;
+            }
+        }
+
+        public static ConstructionObject GetBObjectByID(int id)
+        {
+            DataTable temp = new DataTable();
+            try
+            {
+                DataBase.Get_Instance().Connect();
+                MySqlDataAdapter adapter = new MySqlDataAdapter();
+                MySqlCommand command = new MySqlCommand("SELECT * FROM `constructionobject`  WHERE `ID` = @ID", DataBase.Get_Instance().connection);
+                command.Parameters.Add("@ID", MySqlDbType.Int32).Value = id;
+                adapter.SelectCommand = command;
+                adapter.Fill(temp);
+                if (temp.Rows.Count > 0)
+                {
+                    ConstructionObject constructionObject = new ConstructionObject();
+                    constructionObject.ID = Convert.ToInt32(temp.Rows[0][0]);
+                    constructionObject.customer = GetCustomerByID(Convert.ToInt32(temp.Rows[0][1]));
+                    constructionObject.Region = Convert.ToString(temp.Rows[0][2]);
+                    constructionObject.Sity = Convert.ToString(temp.Rows[0][3]);
+                    constructionObject.Street = Convert.ToString(temp.Rows[0][4]);
+                    constructionObject.TypeBuilding = Convert.ToString(temp.Rows[0][5]);
+                    constructionObject.TypeRoof = Convert.ToString(temp.Rows[0][6]);
+                    constructionObject.RoofMaterial = Convert.ToString(temp.Rows[0][7]);
+                    constructionObject.WallMaterial = Convert.ToString(temp.Rows[0][8]);
+                    constructionObject.DataCreate = Convert.ToString(temp.Rows[0][9]);
+                    constructionObject.Image = (byte[])(temp.Rows[0][10]);
+                    constructionObject.Stage = Convert.ToInt32(temp.Rows[0][11]);
+
+                    DataBase.Get_Instance().Disconnect();
+
+                    return constructionObject;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                string tmp = ex.Message;
+                DataBase.Get_Instance().Disconnect();
+                return null;
+            }
+        }
+        public static Customer GetCustomerByID(int ID)
+        {
+            DataTable temp = new DataTable();
+            try
+            {
+                DataBase.Get_Instance().Connect();
+                MySqlDataAdapter adapter = new MySqlDataAdapter();
+                MySqlCommand command = new MySqlCommand("SELECT * FROM `customer` WHERE `ID` = @ID ", DataBase.Get_Instance().connection);
+                command.Parameters.Add("@ID", MySqlDbType.Int32).Value = ID;
+                adapter.SelectCommand = command;
+                adapter.Fill(temp);
+                DataBase.Get_Instance().Disconnect();
+                if (temp.Rows.Count > 0)
+                {
+                    Customer customer = new Customer();
+                    customer.ID = Convert.ToInt32(temp.Rows[0][0]);
+                    customer.PIB = Convert.ToString(temp.Rows[0][1]);
+                    customer.Phone = Convert.ToString(temp.Rows[0][2]);
+                    customer.Email = Convert.ToString(temp.Rows[0][3]);
+                    return customer;
+                }
+
+                else
+                {
+                    DataBase.Get_Instance().Disconnect();
+                    return null;
+                }
+
+            }
+            catch
+            {
+                DataBase.Get_Instance().Disconnect();
+                return null;
+            }
+        }
         public static List<UserWorkInformation> GetUsers(Brigade brigade)
         {
             List<UserWorkInformation> userWorkInformation = new List<UserWorkInformation>();
@@ -221,6 +335,44 @@ namespace BuildTelegramBot.MySQL
             return null;
         }
 
+        public static UserWorkInformation GetUserWIByIDUser(int ID)
+        {
+            DataTable temp = new DataTable();
+            try
+            {
+                DataBase.Get_Instance().Connect();
+                MySqlDataAdapter adapter = new MySqlDataAdapter();
+                MySqlCommand command = new MySqlCommand("SELECT * FROM `user_working_information` WHERE `ID_User` = @ID", DataBase.Get_Instance().connection);
+                command.Parameters.Add("@ID", MySqlDbType.Int32).Value = ID;
+                adapter.SelectCommand = command;
+                adapter.Fill(temp);
+                if (temp.Rows.Count > 0)
+                {
+
+                    UserWorkInformation userWorkInformation = new UserWorkInformation();
+                    userWorkInformation.ID = Convert.ToUInt32(temp.Rows[0][0]);
+                    userWorkInformation.user = GetUserByID(Convert.ToInt32(temp.Rows[0][1]));
+                    userWorkInformation.Stage = (temp.Rows[0][2]).ToString();
+                    userWorkInformation.Position = (temp.Rows[0][3]).ToString();
+                    userWorkInformation.WorkRegion = (temp.Rows[0][4]).ToString();
+                    userWorkInformation.Salary = (temp.Rows[0][5]).ToString();
+
+                    DataBase.Get_Instance().Disconnect();
+
+                    return userWorkInformation;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                string tmp = ex.Message;
+                DataBase.Get_Instance().Disconnect();
+                return null;
+            }
+        }
         public static UserWorkInformation GetUserWIByID(int ID)
         {
             DataTable temp = new DataTable();

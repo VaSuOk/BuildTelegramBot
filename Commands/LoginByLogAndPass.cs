@@ -19,7 +19,7 @@ namespace BuildTelegramBot.Commands
             var messageId = e.Message.MessageId;
 
             client.SendTextMessageAsync(e.Message.Chat, "Введіть логін та пароль 🔑", replyMarkup: new ReplyKeyboardRemove());
-            ListUsers.Get_instance().ChangeStatus(e.Message.Chat.Id.ToString(), Status.ChangeDataLogin);
+            ListUsers.Get_instance().ChangeStatus(e.Message.Chat.Id.ToString(), Status.WaitInputLoginAndPassword);
         }
         public static void GetLoginData(MessageEventArgs e, TelegramBotClient client)
         {
